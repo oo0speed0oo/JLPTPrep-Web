@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}— Answer{% endblock %}
+{% block content %}
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+  <span class="meta">Question {{ current }} of {{ total }}</span>
+  <span class="tag tag-blue">Score: {{ score }}</span>
+</div>
+
+<div class="card">
+  <p class="meta">{{ question.question_number }} · Chapter {{ question.chapter_number }}</p>
+  <p style="font-size:20px;font-weight:600;line-height:1.5;margin-top:8px">
+    {{ question.question }}
+  </p>
+</div>
+
+<!-- Result banner -->
+{% if is_correct %}
+<div style="background:#e3f9e8;border-radius:12px;padding:16px;text-align:center;margin-bottom:16px">
+  <p style="font-size:24px;font-weight:700;color:#34c759">✅ Correct!</p>
+</div>
+{% else %}
+<div style="background:#ffe3e3;border-radius:12px;padding:16px;text-align:center;margin-bottom:16px">
+  <p style="font-size:22px;font-weight:700;color:#ff3b30">❌ Wrong</p>
+  <p style="margin-top:6px;color:#666">Correct answer: <strong>{{ correct }}</strong> —
+    {{ question['choice_' + correct.lower()] }}</p>
+</div>
+{% endif %}
+
+<!-- All choices shown with highlight -->
+{% for letter, key in [('A','choice_a'),('B','choice_b'),('C','choice_c'),('D','choice_d')] %}
+{% set is_correct_choice = letter == correct %}
+{% set is_user_choice = letter == user_choice %}
+<div style="padding:14px;margin-bottom:8px;border-radius:12px;border:2px solid
+  {% if is_correct_choice %}#34c759{% elif is_user_choice and not is_correct %}#ff3b30{% else %}#e5e5ea{% endif %};
+  background:{% if is_correct_choice %}#e3f9e8{% elif is_user_choice and not is_correct %}#ffe3e3{% else %}white{% endif %}">
+  <span style="font-weight:700;margin-right:10px;color:
+    {% if is_correct_choice %}#34c759{% elif is_user_choice %}#ff3b30{% else %}#888{% endif %}">
+    {{ letter }}
+  </span>{{ question[key] }}
+</div>
+{% endfor %}
+
+<a href="/quiz" class="btn btn-primary" style="margin-top:16px">
+  {% if current < total %}Next Question →{% else %}See Results 🎉{% endif %}
+</a>
+{% endblock %}

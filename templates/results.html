@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}— Results{% endblock %}
+{% block content %}
+<div style="text-align:center;padding:20px 0">
+  <p style="font-size:52px;margin-bottom:10px">
+    {% if pct >= 90 %}🏆{% elif pct >= 70 %}⭐{% elif pct >= 50 %}👍{% else %}💪{% endif %}
+  </p>
+  <h1>Quiz Complete!</h1>
+</div>
+
+<div class="card" style="text-align:center;margin:20px 0">
+  <p style="font-size:56px;font-weight:800;color:{{ grade[1] }}">
+    {{ score }} / {{ total }}
+  </p>
+  <p style="font-size:20px;margin-top:8px">
+    <span class="tag tag-{% if pct >= 90 %}green{% elif pct >= 70 %}blue{% elif pct >= 50 %}orange{% else %}red{% endif %}">
+      {{ pct }}% · {{ grade[0] }}
+    </span>
+  </p>
+</div>
+
+<a href="/" class="btn btn-primary">Back to Menu</a>
+<a href="/units/{{ filename }}" class="btn btn-gray">Study Again</a>
+{% endblock %}

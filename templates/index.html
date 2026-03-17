@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}— Home{% endblock %}
+{% block content %}
+<h1>Select a Quiz 📚</h1>
+<p class="meta" style="margin-bottom:20px">Choose a topic to start studying</p>
+
+{% for filename, display in files.items() %}
+<a href="/units/{{ filename }}" class="btn btn-primary">{{ display }}</a>
+{% else %}
+<div class="card">
+  <p style="color:#888;text-align:center">No quiz files found.<br>Add CSV files to the <code>data/</code> folder.</p>
+</div>
+{% endfor %}
+{% endblock %}

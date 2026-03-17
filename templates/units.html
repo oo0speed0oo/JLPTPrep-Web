@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}— Select Units{% endblock %}
+{% block content %}
+<h1>{{ display_name }}</h1>
+<h2>Select Units</h2>
+
+<form method="GET" action="/chapters/{{ filename }}">
+  <div class="card">
+    {% for unit in units %}
+    <label style="display:flex;align-items:center;gap:12px;padding:12px 0;
+                  border-bottom:1px solid #f0f0f0;cursor:pointer">
+      <input type="checkbox" name="units" value="{{ unit }}" checked
+             style="width:20px;height:20px;accent-color:#007aff">
+      <span style="font-size:16px">Unit {{ unit }}</span>
+    </label>
+    {% endfor %}
+  </div>
+
+  <button type="submit" class="btn btn-primary">Continue to Chapters →</button>
+  <a href="/" class="btn btn-gray">← Back</a>
+</form>
+{% endblock %}

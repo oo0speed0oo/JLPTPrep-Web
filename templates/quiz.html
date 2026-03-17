@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}— Question {{ current }}{% endblock %}
+{% block content %}
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+  <span class="meta">Question {{ current }} of {{ total }}</span>
+  <span class="tag tag-blue">Score: {{ score }}</span>
+</div>
+
+<!-- Progress bar -->
+<div style="background:#e5e5ea;border-radius:99px;height:6px;margin-bottom:20px">
+  <div style="background:#007aff;border-radius:99px;height:6px;
+              width:{{ ((current-1) / total * 100)|int }}%"></div>
+</div>
+
+<div class="card">
+  <p class="meta">Q{{ question.question_number }} · Chapter {{ question.chapter_number }}</p>
+  <p style="font-size:20px;font-weight:600;line-height:1.5;margin-top:8px">
+    {{ question.question }}
+  </p>
+</div>
+
+<form method="POST" action="/quiz/answer">
+  {% for letter, key in [('A','choice_a'),('B','choice_b'),('C','choice_c'),('D','choice_d')] %}
+  <button type="submit" name="choice" value="{{ letter }}"
+          style="display:block;width:100%;padding:16px;margin-bottom:10px;
+                 background:white;border:2px solid #e5e5ea;border-radius:12px;
+                 font-size:16px;text-align:left;cursor:pointer;transition:all 0.15s">
+    <span style="font-weight:700;color:#007aff;margin-right:10px">{{ letter }}</span>
+    {{ question[key] }}
+  </button>
+  {% endfor %}
+</form>
+{% endblock %}
